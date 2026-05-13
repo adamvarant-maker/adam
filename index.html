@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centrale Food — Fast-Food & Street Food</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #f5a623;
+      --dark: #0e0e0e;
+      --card: #1a1a1a;
+    }
+    * { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: #fff; }
+    .font-display { font-family: 'Bebas Neue', sans-serif; }
+
+    /* NAV */
+    nav { backdrop-filter: blur(14px); background: rgba(14,14,14,.85); }
+
+    /* HERO */
+    .hero-bg {
+      background: linear-gradient(135deg, #0e0e0e 0%, #1a1000 60%, #0e0e0e 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(245,166,35,.18) 0%, transparent 70%);
+    }
+    .hero-badge {
+      background: var(--gold);
+      clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+    }
+
+    /* MENU TABS */
+    .tab-btn.active { background: var(--gold); color: #000; }
+    .tab-btn { transition: background .2s, color .2s; }
+    .menu-panel { display: none; }
+    .menu-panel.active { display: grid; }
+
+    /* CARDS */
+    .food-card {
+      background: var(--card);
+      border: 1px solid #2a2a2a;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .food-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: 0 8px 32px rgba(245,166,35,.2);
+    }
+    .price-badge {
+      background: var(--gold);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+      min-width: 52px;
+    }
+
+    /* STEPS */
+    .step-card { background: #111; border: 1px solid #252525; }
+    .step-num { background: var(--gold); color: #000; }
+
+    /* SECTION TITLE */
+    .section-line::after {
+      content: ''; display: block; width: 64px; height: 4px;
+      background: var(--gold); border-radius: 2px; margin: .5rem auto 0;
+    }
+
+    /* GALLERY */
+    .gallery-img { transition: transform .35s, filter .35s; filter: brightness(.85); }
+    .gallery-img:hover { transform: scale(1.04); filter: brightness(1); }
+
+    /* CTA STRIP */
+    .cta-strip {
+      background: linear-gradient(90deg, #f5a623 0%, #e8920a 100%);
+    }
+
+    /* FOOTER */
+    footer { background: #080808; border-top: 1px solid #1f1f1f; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s, transform .6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* MOBILE NAV */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+    <a href="#hero" class="font-display text-3xl tracking-widest" style="color:var(--gold)">CENTRALE<span class="text-white">FOOD</span></a>
+    <ul class="hidden md:flex gap-8 text-sm font-semibold uppercase tracking-wider text-gray-300">
+      <li><a href="#menu" class="hover:text-yellow-400 transition">Menu</a></li>
+      <li><a href="#tacos" class="hover:text-yellow-400 transition">Tacos</a></li>
+      <li><a href="#about" class="hover:text-yellow-400 transition">À propos</a></li>
+      <li><a href="#gallery" class="hover:text-yellow-400 transition">Galerie</a></li>
+      <li><a href="#contact" class="hover:text-yellow-400 transition">Contact</a></li>
+    </ul>
+    <a href="#menu" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full font-bold text-sm text-black" style="background:var(--gold)">
+      Commander
+    </a>
+    <button id="burger-btn" class="md:hidden text-white" onclick="document.getElementById('mobile-menu').classList.toggle('open')">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="flex-col px-6 pb-4 gap-3 text-sm font-semibold uppercase tracking-wider text-gray-300 border-t border-white/5">
+    <a href="#menu" class="py-2 hover:text-yellow-400 transition" onclick="document.getElementById('mobile-menu').classList.remove('open')">Menu</a>
+    <a href="#tacos" class="py-2 hover:text-yellow-400 transition" onclick="document.getElementById('mobile-menu').classList.remove('open')">Tacos</a>
+    <a href="#about" class="py-2 hover:text-yellow-400 transition" onclick="document.getElementById('mobile-menu').classList.remove('open')">À propos</a>
+    <a href="#gallery" class="py-2 hover:text-yellow-400 transition" onclick="document.getElementById('mobile-menu').classList.remove('open')">Galerie</a>
+    <a href="#contact" class="py-2 hover:text-yellow-400 transition" onclick="document.getElementById('mobile-menu').classList.remove('open')">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section id="hero" class="hero-bg min-h-screen flex items-center pt-16">
+  <div class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-2 mb-6">
+        <span class="hero-badge px-5 py-1 text-black font-black text-xs uppercase tracking-widest">Street Food &amp; Burgers</span>
+      </div>
+      <h1 class="font-display text-7xl md:text-9xl leading-none mb-6">
+        CENTRALE<br><span style="color:var(--gold)">FOOD</span>
+      </h1>
+      <p class="text-gray-400 text-lg max-w-md mb-10 leading-relaxed">
+        Burgers généreux, tacos sur-mesure, poutine maison &amp; bien plus.<br>
+        La vraie street-food, sans compromis.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#menu" class="flex items-center gap-2 px-8 py-4 rounded-full font-black text-lg text-black transition hover:brightness-110 active:scale-95" style="background:var(--gold)">
+          Voir le Menu
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+        </a>
+        <a href="#contact" class="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-lg border border-white/20 text-white hover:border-yellow-400 transition">
+          Nous trouver
+        </a>
+      </div>
+      <div class="mt-12 flex gap-8">
+        <div>
+          <p class="font-display text-4xl" style="color:var(--gold)">6€</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider">Dès</p>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div>
+          <p class="font-display text-4xl text-white">7j/7</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider">Ouvert</p>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div>
+          <p class="font-display text-4xl text-white">+20</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider">Articles</p>
+        </div>
+      </div>
+    </div>
+    <!-- Hero visual -->
+    <div class="relative flex justify-center items-center">
+      <div class="absolute inset-0 rounded-full" style="background: radial-gradient(circle, rgba(245,166,35,.25) 0%, transparent 70%)"></div>
+      <div class="relative w-80 h-80 md:w-96 md:h-96 rounded-2xl overflow-hidden border-2 border-yellow-500/30 shadow-2xl shadow-yellow-500/10">
+        <!-- Placeholder hero image — replace src with real photo -->
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=80"
+             alt="Burger Centrale Food" class="w-full h-full object-cover" loading="eager" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-4 left-4">
+          <span class="text-xs uppercase tracking-widest text-yellow-400 font-bold">Le 180</span>
+          <p class="font-display text-2xl text-white">Steak 180gr</p>
+        </div>
+      </div>
+      <!-- floating badge -->
+      <div class="absolute -bottom-4 -right-4 md:bottom-8 md:-right-8 bg-yellow-400 rounded-2xl p-4 text-black shadow-xl">
+        <p class="font-black text-2xl leading-none">7<span class="text-base">€90</span></p>
+        <p class="text-xs font-bold mt-0.5">Le 180</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MENU ═══════════════════════ -->
+<section id="menu" class="py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm font-bold mb-2">Notre Carte</p>
+      <h2 class="font-display text-6xl md:text-7xl section-line">LE MENU</h2>
+    </div>
+
+    <!-- TAB BAR -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+      <button class="tab-btn active px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-yellow-400/30" onclick="switchTab('burgers',this)">Burgers</button>
+      <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-white/10 text-gray-400" onclick="switchTab('philly',this)">Philly's</button>
+      <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-white/10 text-gray-400" onclick="switchTab('baguette',this)">Pain Baguette</button>
+      <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-white/10 text-gray-400" onclick="switchTab('poutine',this)">Poutine</button>
+      <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-white/10 text-gray-400" onclick="switchTab('texmex',this)">Tex-Mex</button>
+      <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider border border-white/10 text-gray-400" onclick="switchTab('desserts',this)">Desserts</button>
+    </div>
+
+    <!-- BURGERS -->
+    <div id="tab-burgers" class="menu-panel active grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+      <!-- Le 180 -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 bg-gradient-to-br from-yellow-900/30 to-black flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=75" alt="Le 180" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">LE 180</h3>
+              <p class="text-gray-500 text-xs mt-1">Steak 180gr, crudités, cheddar, sauce biggy</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">7<span class="text-xs">€90</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Montagnard -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=75" alt="Montagnard" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">MONTAGNARD</h3>
+              <p class="text-gray-500 text-xs mt-1">Steak 80gr, lardons, raclette, oignons frits, sauce pepper</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">6<span class="text-xs">€50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bacon -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=75" alt="Bacon Burger" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">BACON</h3>
+              <p class="text-gray-500 text-xs mt-1">Steak 80gr, crudités, bacon, cheddar, sauce BBQ</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">6<span class="text-xs">€50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fish -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=400&q=75" alt="Fish Burger" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">FISH</h3>
+              <p class="text-gray-500 text-xs mt-1">Fish, crudités, cheddar, sauce Fish</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">3<span class="text-xs">€90</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- N'oeuf Maison -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&q=75" alt="N'oeuf Maison" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">N'OEUF MAISON</h3>
+              <p class="text-gray-500 text-xs mt-1">Steak 80gr, œuf, crudités, galette de PdT, cheddar, sauce biggy</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">6<span class="text-xs">€50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Big Zga -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=400&q=75" alt="Big Zga" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">BIG ZGA</h3>
+              <p class="text-gray-500 text-xs mt-1">2 Steaks 45gr, crudités, cheddar, sauce maison</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">4<span class="text-xs">€50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chicken B -->
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400&q=75" alt="Chicken B" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="font-display text-2xl tracking-wide">CHICKEN B</h3>
+              <p class="text-gray-500 text-xs mt-1">Poulet frit, crudités, cheddar, sauce BBQ</p>
+            </div>
+            <div class="price-badge flex flex-col items-center justify-center w-14 h-10 text-black font-black text-sm leading-none pt-1">5<span class="text-xs">€50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cheese -->
+      <div class="food-card rounded-2xl overflow-hidden relative">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1548940740-204726a19be3?w=400&q=75" alt="Cheese Burger" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-display text-2xl tracking-wide mb-1">CHEESE</h3>
+          <p class="text-gray-500 text-xs mb-3">Steak 80gr, crudités, cheddar, sauce biggy</p>
+          <div class="flex gap-2">
+            <span class="bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full">Simple 4€50</span>
+            <span class="bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full">Double 6€50</span>
+          </div>
+          <div class="mt-2">
+            <span class="bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full">Triple 7€90</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHILLY'S -->
+    <div id="tab-philly" class="menu-panel grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="food-card rounded-2xl overflow-hidden flex">
+        <div class="w-36 shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300&q=75" alt="Chicky Philly's" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-3xl tracking-wide" style="color:var(--gold)">CHICKY PHILLY'S</h3>
+            <p class="text-gray-500 text-sm mt-2">Potato Bun's, poulet frit, cheddar américain, crudités, sauce BBQ</p>
+          </div>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-black text-2xl text-white">9<span class="text-base text-yellow-400">€90</span></span>
+            <span class="text-xs text-gray-500 border border-white/10 px-3 py-1 rounded-full">Menu +2€90</span>
+          </div>
+        </div>
+      </div>
+      <div class="food-card rounded-2xl overflow-hidden flex">
+        <div class="w-36 shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=300&q=75" alt="Steaky Philly's" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-3xl tracking-wide" style="color:var(--gold)">STEAKY PHILLY'S</h3>
+            <p class="text-gray-500 text-sm mt-2">Potato Bun's, steaks smash, cheddar américain, oignons frits, crudités, sauce originale</p>
+          </div>
+          <div class="flex items-center justify-between mt-4">
+            <span class="font-black text-2xl text-white">9<span class="text-base text-yellow-400">€90</span></span>
+            <span class="text-xs text-gray-500 border border-white/10 px-3 py-1 rounded-full">Menu disponible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAIN BAGUETTE -->
+    <div id="tab-baguette" class="menu-panel grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="food-card rounded-2xl overflow-hidden flex">
+        <div class="w-36 shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569?w=300&q=75" alt="Oriental" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-3xl tracking-wide" style="color:var(--gold)">ORIENTAL</h3>
+            <p class="text-gray-500 text-sm mt-2">Pain baguette, merguez, crudités, sauce au choix + frites</p>
+          </div>
+          <span class="font-black text-2xl text-white mt-4">7<span class="text-base text-yellow-400">€90</span></span>
+        </div>
+      </div>
+      <div class="food-card rounded-2xl overflow-hidden flex">
+        <div class="w-36 shrink-0 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300&q=75" alt="Américain" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-3xl tracking-wide" style="color:var(--gold)">AMÉRICAIN</h3>
+            <p class="text-gray-500 text-sm mt-2">Pain baguette, steaks, crudités, sauce au choix + frites</p>
+          </div>
+          <span class="font-black text-2xl text-white mt-4">7<span class="text-base text-yellow-400">€90</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- POUTINE -->
+    <div id="tab-poutine" class="menu-panel grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-52 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1585325701165-f2f3f70b7f1e?w=600&q=75" alt="Poutine" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-6">
+          <h3 class="font-display text-4xl tracking-wide" style="color:var(--gold)">POUTINE</h3>
+          <p class="text-gray-400 mt-2">Frites Maison, Sauce Cheddar, Oignons frits<br>+ 1 Viande au choix</p>
+          <p class="font-black text-3xl mt-4 text-white">6<span class="text-lg text-yellow-400">€</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEX-MEX -->
+    <div id="tab-texmex" class="menu-panel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🧀</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">MOZZA STICKS</h3>
+        <p class="text-gray-500 text-sm mt-1">x3</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🧀</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">BOUCHÉES CAMEMBERT</h3>
+        <p class="text-gray-500 text-sm mt-1">x3</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🌶️</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">JALAPEÑOS</h3>
+        <p class="text-gray-500 text-sm mt-1">x3</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🍗</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">TENDERS</h3>
+        <p class="text-gray-500 text-sm mt-1">x3</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🧅</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">ONION RINGS</h3>
+        <p class="text-gray-500 text-sm mt-1">x6</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🍗</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">NUGGETS</h3>
+        <p class="text-gray-500 text-sm mt-1">x4</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+      <div class="food-card rounded-2xl p-6">
+        <div class="text-4xl mb-3">🍗</div>
+        <h3 class="font-display text-2xl" style="color:var(--gold)">WINGS</h3>
+        <p class="text-gray-500 text-sm mt-1">x3</p>
+        <p class="font-black text-2xl mt-3 text-white">3<span class="text-sm text-yellow-400">€</span></p>
+      </div>
+    </div>
+
+    <!-- DESSERTS -->
+    <div id="tab-desserts" class="menu-panel grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&q=75" alt="Tarte au daim" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5 flex justify-between items-center">
+          <div>
+            <h3 class="font-display text-2xl" style="color:var(--gold)">TARTE AU DAIM</h3>
+            <p class="text-gray-500 text-sm">Dessert maison</p>
+          </div>
+          <p class="font-black text-2xl text-white">3<span class="text-sm text-yellow-400">€</span></p>
+        </div>
+      </div>
+      <div class="food-card rounded-2xl overflow-hidden">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&q=75" alt="Tiramisu" class="h-full w-full object-cover gallery-img" loading="lazy" />
+        </div>
+        <div class="p-5 flex justify-between items-center">
+          <div>
+            <h3 class="font-display text-2xl" style="color:var(--gold)">TIRAMISU</h3>
+            <p class="text-gray-500 text-sm">Dessert maison</p>
+          </div>
+          <p class="font-black text-2xl text-white">3<span class="text-sm text-yellow-400">€</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TACOS ═══════════════════════ -->
+<section id="tacos" class="py-24 px-6" style="background: linear-gradient(180deg, #0e0e0e 0%, #110a00 50%, #0e0e0e 100%)">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm font-bold mb-2">Sur-mesure</p>
+      <h2 class="font-display text-6xl md:text-7xl section-line">LES TACOS</h2>
+      <p class="text-gray-500 mt-6 max-w-xl mx-auto">Construis ton tacos en 4 étapes. Tu choisis tout — la taille, la viande, la sauce, les extras.</p>
+    </div>
+
+    <!-- 4 STEPS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+
+      <!-- Step 1 -->
+      <div class="step-card rounded-2xl p-6 reveal">
+        <div class="step-num w-10 h-10 rounded-full flex items-center justify-center font-black text-lg mb-4">1</div>
+        <h3 class="font-display text-2xl mb-4 text-white">TAILLE</h3>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center py-2 border-b border-white/5">
+            <span class="text-sm font-semibold">Simple <span class="text-gray-500 text-xs">(1 viande)</span></span>
+            <span class="font-black text-yellow-400">6€</span>
+          </div>
+          <div class="flex justify-between items-center py-2 border-b border-white/5">
+            <span class="text-sm font-semibold">Double <span class="text-gray-500 text-xs">(2 viandes)</span></span>
+            <span class="font-black text-yellow-400">8€</span>
+          </div>
+          <div class="flex justify-between items-center py-2">
+            <span class="text-sm font-semibold">Triple <span class="text-gray-500 text-xs">(3 viandes, 2 galettes)</span></span>
+            <span class="font-black text-yellow-400">11€</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card rounded-2xl p-6 reveal">
+        <div class="step-num w-10 h-10 rounded-full flex items-center justify-center font-black text-lg mb-4">2</div>
+        <h3 class="font-display text-2xl mb-4 text-white">VIANDE</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Poulet</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Kebab</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Steak</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Tenders</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Nuggets</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Cordon bleu</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Fish</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Escalope panée</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Merguez</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card rounded-2xl p-6 reveal">
+        <div class="step-num w-10 h-10 rounded-full flex items-center justify-center font-black text-lg mb-4">3</div>
+        <h3 class="font-display text-2xl mb-4 text-white">SAUCE</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Andalouse</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Tartare</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Brazil</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Ketchup</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Biggy</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Blanche</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Poivre</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Barbecue</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Fish</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Curry</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Mayo</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Chili thaï</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Algérienne</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Samouraï</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Magic onion</span>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card rounded-2xl p-6 reveal">
+        <div class="step-num w-10 h-10 rounded-full flex items-center justify-center font-black text-lg mb-4">4</div>
+        <h3 class="font-display text-2xl mb-4 text-white">EXTRAS</h3>
+        <p class="text-xs text-gray-500 uppercase tracking-wider mb-3">Fromages</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Raclette</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Chèvre</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Oeuf</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Cheddar</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibond bg-white/5 border border-white/10">Emmental</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Boursin</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/5 border border-white/10">Mozza</span>
+        </div>
+        <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Charcuterie <span class="text-yellow-400">+1€</span></p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-400/5 border border-yellow-400/20 text-yellow-400">Chorizo</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-400/5 border border-yellow-400/20 text-yellow-400">Lardons</span>
+          <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-yellow-400/5 border border-yellow-400/20 text-yellow-400">Bacon américain</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIAL DEALS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Menu Étudiant -->
+      <div class="rounded-2xl p-8 border border-yellow-500/30 relative overflow-hidden" style="background: linear-gradient(135deg, #1a1000, #0e0e0e)">
+        <div class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold text-black" style="background:var(--gold)">Midi uniquement</div>
+        <h3 class="font-display text-4xl" style="color:var(--gold)">MENU ÉTUDIANT</h3>
+        <p class="text-gray-400 mt-3">Tacos 1 viande + frites + boisson 33cl</p>
+        <p class="font-black text-5xl mt-4 text-white">7<span class="text-2xl text-yellow-400">€</span></p>
+      </div>
+      <!-- Kids Meal -->
+      <div class="rounded-2xl p-8 border border-yellow-500/30 relative overflow-hidden" style="background: linear-gradient(135deg, #001a0a, #0e0e0e)">
+        <h3 class="font-display text-4xl" style="color:var(--gold)">KIDS MEAL</h3>
+        <p class="text-gray-400 mt-3">Cheese ou Nuggets + boisson + Dessert</p>
+        <p class="font-black text-5xl mt-4 text-white">5<span class="text-2xl text-yellow-400">€90</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CTA STRIP ═══════════════════════ -->
+<div class="cta-strip py-14 px-6 text-center reveal">
+  <h2 class="font-display text-5xl md:text-6xl text-black mb-2">COMMANDE EN MAGASIN</h2>
+  <p class="text-black/70 text-lg mb-8">Viens nous voir directement — on prépare tout devant toi.</p>
+  <a href="#contact" class="inline-flex items-center gap-3 bg-black text-white px-10 py-4 rounded-full font-black text-lg hover:bg-gray-900 transition">
+    Voir nos horaires
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+  </a>
+</div>
+
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<section id="about" class="py-24 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div class="reveal">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm font-bold mb-3">Notre Histoire</p>
+      <h2 class="font-display text-6xl md:text-7xl leading-none mb-8">CENTRALE<br><span style="color:var(--gold)">FOOD</span></h2>
+      <div class="space-y-5 text-gray-400 leading-relaxed">
+        <p>Née de la passion pour la vraie street-food, <strong class="text-white">Centrale Food</strong> s'est donné une mission simple : proposer des produits généreux, frais et préparés à la commande, sans jamais rogner sur la qualité.</p>
+        <p>Des burgers costauds, des tacos entièrement personnalisables, une poutine 100% maison et des formules pour tous les budgets — voilà ce que tu trouveras chez nous.</p>
+        <p>Chaque viande est soigneusement choisie, chaque sauce est préparée sur place. Ici, pas de surgelé, juste du bon.</p>
+      </div>
+      <div class="mt-10 grid grid-cols-3 gap-6">
+        <div class="text-center">
+          <p class="font-display text-4xl" style="color:var(--gold)">100%</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Fait maison</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-4xl text-white">7j/7</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Ouvert</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-4xl text-white">+15</p>
+          <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Sauces dispo</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 reveal">
+      <div class="aspect-square rounded-2xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=75" alt="Burger" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden mt-8">
+        <img src="https://images.unsplash.com/photo-1552895638-f7fe08d2f7d5?w=500&q=75" alt="Tacos" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1585325701165-f2f3f70b7f1e?w=500&q=75" alt="Frites" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-2xl overflow-hidden mt-8">
+        <img src="https://images.unsplash.com/photo-1600333859399-22a33e8e1b8c?w=500&q=75" alt="Food" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ GALLERY ═══════════════════════ -->
+<section id="gallery" class="py-24 px-6 bg-black/40">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm font-bold mb-2">En images</p>
+      <h2 class="font-display text-6xl md:text-7xl section-line">GALERIE</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div class="aspect-square rounded-xl overflow-hidden col-span-2 row-span-2">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=80" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1585325701165-f2f3f70b7f1e?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1552895638-f7fe08d2f7d5?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+      <div class="aspect-square rounded-xl overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=75" alt="" class="w-full h-full object-cover gallery-img" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<section id="contact" class="py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <p class="text-yellow-400 uppercase tracking-widest text-sm font-bold mb-2">Viens nous voir</p>
+      <h2 class="font-display text-6xl md:text-7xl section-line">CONTACT</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- Horaires -->
+      <div class="food-card rounded-2xl p-8 reveal">
+        <div class="w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style="background: rgba(245,166,35,.15)">
+          <svg class="w-6 h-6" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"/></svg>
+        </div>
+        <h3 class="font-display text-2xl mb-5" style="color:var(--gold)">HORAIRES</h3>
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Lundi – Vendredi</span>
+            <span class="font-semibold">11h30 – 22h00</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Samedi</span>
+            <span class="font-semibold">11h30 – 23h00</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Dimanche</span>
+            <span class="font-semibold">12h00 – 22h00</span>
+          </div>
+        </div>
+        <div class="mt-5 p-3 rounded-xl text-xs text-yellow-400 font-semibold" style="background: rgba(245,166,35,.08)">
+          Menu Étudiant disponible uniquement le midi
+        </div>
+      </div>
+
+      <!-- Adresse -->
+      <div class="food-card rounded-2xl p-8 reveal">
+        <div class="w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style="background: rgba(245,166,35,.15)">
+          <svg class="w-6 h-6" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="font-display text-2xl mb-5" style="color:var(--gold)">ADRESSE</h3>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Centrale Food<br>
+          [Votre adresse ici]<br>
+          [Ville, Code Postal]
+        </p>
+        <a href="#" class="flex items-center gap-2 text-sm font-semibold text-yellow-400 hover:text-yellow-300 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          Ouvrir dans Google Maps
+        </a>
+      </div>
+
+      <!-- Réseaux -->
+      <div class="food-card rounded-2xl p-8 reveal">
+        <div class="w-12 h-12 rounded-xl mb-6 flex items-center justify-center" style="background: rgba(245,166,35,.15)">
+          <svg class="w-6 h-6" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.632 4.684a3 3 0 10-5.316-2.684 3 3 0 005.316 2.684zm-9.632-7a3 3 0 105.316-2.684 3 3 0 00-5.316 2.684z"/></svg>
+        </div>
+        <h3 class="font-display text-2xl mb-5" style="color:var(--gold)">NOUS SUIVRE</h3>
+        <div class="space-y-4">
+          <a href="#" class="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition group">
+            <svg class="w-5 h-5 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+            <span class="text-sm font-semibold group-hover:text-yellow-400 transition">Instagram</span>
+          </a>
+          <a href="#" class="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition group">
+            <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <span class="text-sm font-semibold group-hover:text-yellow-400 transition">Facebook</span>
+          </a>
+          <a href="tel:+33XXXXXXXXX" class="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition group">
+            <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            <span class="text-sm font-semibold group-hover:text-yellow-400 transition">Téléphone</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="py-12 px-6">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <a href="#hero" class="font-display text-3xl tracking-widest" style="color:var(--gold)">CENTRALE<span class="text-white">FOOD</span></a>
+    <nav class="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+      <a href="#menu" class="hover:text-yellow-400 transition">Menu</a>
+      <a href="#tacos" class="hover:text-yellow-400 transition">Tacos</a>
+      <a href="#about" class="hover:text-yellow-400 transition">À propos</a>
+      <a href="#gallery" class="hover:text-yellow-400 transition">Galerie</a>
+      <a href="#contact" class="hover:text-yellow-400 transition">Contact</a>
+    </nav>
+    <p class="text-xs text-gray-600">© 2026 Centrale Food. Tous droits réservés.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+  // Tab switching
+  function switchTab(tabName, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('text-gray-400');
+      b.style.borderColor = '';
+    });
+    document.getElementById('tab-' + tabName).classList.add('active');
+    btn.classList.add('active');
+    btn.classList.remove('text-gray-400');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
