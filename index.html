@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Centrale Food — Burgers, Tacos & Street Food</title>
+<meta name="description" content="Centrale Food : burgers gourmands, tacos généreux, philly's et poutine. Commandez sur place ou à emporter." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0a0a0a',
+          coal: '#141414',
+          char: '#1c1c1c',
+          gold: '#fbbf24',
+          flame: '#f97316',
+        },
+        fontFamily: {
+          display: ['"Bebas Neue"', 'sans-serif'],
+          marker: ['"Permanent Marker"', 'cursive'],
+          sans: ['Inter', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #0a0a0a; }
+  .price-tag {
+    background: #fbbf24;
+    color: #111;
+    transform: rotate(-8deg);
+    box-shadow: 0 6px 14px rgba(251,191,36,.25);
+  }
+  .grain {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(249,115,22,.18), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(251,191,36,.15), transparent 45%),
+      linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+  }
+  .card {
+    background: linear-gradient(180deg, #1c1c1c 0%, #111 100%);
+    border: 1px solid rgba(251,191,36,.08);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(251,191,36,.5);
+    box-shadow: 0 18px 40px rgba(249,115,22,.15);
+  }
+  .placeholder-img {
+    background:
+      repeating-linear-gradient(45deg, #2a2a2a 0 10px, #222 10px 20px);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .placeholder-img span {
+    font-family: 'Permanent Marker', cursive;
+    color: #fbbf24; opacity: .35; font-size: 1.2rem;
+  }
+  .chip {
+    background: rgba(251,191,36,.1);
+    border: 1px solid rgba(251,191,36,.3);
+    color: #fbbf24;
+  }
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content:''; position:absolute; left:0; bottom:-6px;
+    width:0; height:2px; background:#fbbf24; transition: width .25s ease;
+  }
+  .nav-link:hover::after { width:100%; }
+  .tab-btn.active {
+    background:#fbbf24; color:#111;
+  }
+</style>
+</head>
+<body class="text-neutral-200 font-sans antialiased">
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink/70 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-lg bg-gold flex items-center justify-center font-display text-ink text-xl">CF</div>
+      <span class="font-display text-2xl tracking-wider">CENTRALE <span class="text-gold">FOOD</span></span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
+      <a href="#menu" class="nav-link hover:text-gold">Menu</a>
+      <a href="#tacos" class="nav-link hover:text-gold">Tacos</a>
+      <a href="#about" class="nav-link hover:text-gold">À propos</a>
+      <a href="#contact" class="nav-link hover:text-gold">Contact</a>
+    </nav>
+    <a href="#contact" class="hidden md:inline-block bg-gold text-ink px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-flame transition">Commander</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="grain pt-32 pb-24 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <span class="chip inline-block px-4 py-1 rounded-full text-xs uppercase tracking-widest mb-6">Ouvert 7j/7 — 11h à 23h</span>
+      <h1 class="font-display text-6xl md:text-8xl leading-none tracking-wide">
+        DU GOÛT.<br>
+        DU GROS.<br>
+        <span class="text-gold">DU FRAIS.</span>
+      </h1>
+      <p class="mt-6 text-neutral-400 max-w-md text-lg">
+        Burgers smashés, tacos XXL, philly's signature et poutine maison. Préparé minute, servi chaud, mangé vite.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#menu" class="bg-gold text-ink px-7 py-3 rounded-full font-bold uppercase tracking-wider hover:bg-flame transition">Voir le menu</a>
+        <a href="#contact" class="border border-white/20 px-7 py-3 rounded-full font-bold uppercase tracking-wider hover:border-gold hover:text-gold transition">Nous trouver</a>
+      </div>
+      <div class="mt-10 flex gap-8 text-sm text-neutral-400">
+        <div><div class="font-display text-3xl text-gold">12+</div>Burgers signature</div>
+        <div><div class="font-display text-3xl text-gold">100%</div>Viande fraîche</div>
+        <div><div class="font-display text-3xl text-gold">7€</div>Menu étudiant</div>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="placeholder-img aspect-square rounded-3xl">
+        <span>[ Photo Hero — Burger ]</span>
+      </div>
+      <div class="absolute -bottom-6 -left-6 price-tag w-24 h-24 rounded-2xl flex flex-col items-center justify-center font-display">
+        <span class="text-3xl leading-none">7€</span>
+        <span class="text-xs">À partir de</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="py-24 px-6 bg-coal">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14">
+      <span class="chip inline-block px-4 py-1 rounded-full text-xs uppercase tracking-widest">Notre carte</span>
+      <h2 class="font-display text-5xl md:text-6xl mt-4 tracking-wide">LES <span class="text-gold">BURGERS</span></h2>
+      <p class="text-neutral-400 mt-3 max-w-xl mx-auto">Pain brioché, viande fraîche, sauces maison. Servis avec frites en menu (+2,90€).</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Burger card template -->
+      <article class="card rounded-2xl p-5 relative">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Le 180 ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">LE 180</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">7,90€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Steak 180gr, crudités, cheddar, sauce biggy.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Montagnard ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">MONTAGNARD</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">6,50€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Steak 80gr, crudités, lardons, raclette, oignons frits, sauce pepper.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Bacon ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">BACON</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">6,90€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Steak 80gr, crudités, bacon, cheddar, sauce BBQ.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Fish ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">FISH</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">3,90€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Filet de poisson, crudités, cheddar, sauce fish.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ N'œuf Maison ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">N'ŒUF MAISON</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">6,90€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Steak 80gr, œuf, crudités, galette de pdt, cheddar, sauce biggy.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Big Zga ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">BIG ZGA</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">4,90€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">2 steaks 45gr, crudités, cheddar, sauce maison.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Chicken B ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">CHICKEN B</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">5,50€</span>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Poulet frit, crudités, cheddar, sauce BBQ.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Cheese ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">CHEESE</h3>
+          <div class="flex flex-col items-end gap-1">
+            <span class="text-xs text-neutral-400">Simple <b class="text-gold">4,50€</b></span>
+            <span class="text-xs text-neutral-400">Double <b class="text-gold">6,50€</b></span>
+            <span class="text-xs text-neutral-400">Triple <b class="text-gold">7,90€</b></span>
+          </div>
+        </div>
+        <p class="text-neutral-400 text-sm mt-2">Steak 80gr, crudités, cheddar, sauce biggy.</p>
+      </article>
+
+      <article class="card rounded-2xl p-5 bg-gradient-to-br from-flame/20 to-gold/10 border-gold/30">
+        <div class="placeholder-img h-44 rounded-xl mb-4"><span>[ Poutine ]</span></div>
+        <div class="flex items-start justify-between gap-3">
+          <h3 class="font-display text-2xl tracking-wide">POUTINE</h3>
+          <span class="price-tag px-3 py-1 rounded-md font-display text-lg">6€</span>
+        </div>
+        <p class="text-neutral-300 text-sm mt-2">Frites maison, sauce cheddar, oignons frits + 1 viande au choix.</p>
+      </article>
+    </div>
+
+    <!-- PHILLY'S & PAIN BAGUETTE -->
+    <div class="grid md:grid-cols-2 gap-6 mt-10">
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-marker text-3xl text-gold mb-4">Philly's</h3>
+        <ul class="divide-y divide-white/5">
+          <li class="py-3 flex justify-between gap-4">
+            <div>
+              <div class="font-display text-xl">CHICKY PHILLY'S</div>
+              <p class="text-neutral-400 text-sm">Potato bun's, poulet frit, cheddar américain, crudités, sauce BBQ.</p>
+            </div>
+            <span class="price-tag px-3 py-1 rounded-md font-display text-lg shrink-0">9,90€</span>
+          </li>
+          <li class="py-3 flex justify-between gap-4">
+            <div>
+              <div class="font-display text-xl">STEAKY PHILLY'S</div>
+              <p class="text-neutral-400 text-sm">Potato bun's, steaks smash, cheddar américain, oignons frits, sauce originale.</p>
+            </div>
+            <span class="price-tag px-3 py-1 rounded-md font-display text-lg shrink-0">9,90€</span>
+          </li>
+        </ul>
+        <p class="text-xs text-neutral-500 mt-3">Menu +2,90€ (frites + boisson)</p>
+      </div>
+
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-marker text-3xl text-gold mb-4">Pain baguette</h3>
+        <ul class="divide-y divide-white/5">
+          <li class="py-3 flex justify-between gap-4">
+            <div>
+              <div class="font-display text-xl">ORIENTAL</div>
+              <p class="text-neutral-400 text-sm">Pain baguette, merguez, crudités, sauce au choix + frites.</p>
+            </div>
+            <span class="price-tag px-3 py-1 rounded-md font-display text-lg shrink-0">7,90€</span>
+          </li>
+          <li class="py-3 flex justify-between gap-4">
+            <div>
+              <div class="font-display text-xl">AMÉRICAIN</div>
+              <p class="text-neutral-400 text-sm">Pain baguette, steaks, crudités, sauce au choix + frites.</p>
+            </div>
+            <span class="price-tag px-3 py-1 rounded-md font-display text-lg shrink-0">7,90€</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TACOS BUILDER -->
+<section id="tacos" class="py-24 px-6 grain">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14">
+      <span class="chip inline-block px-4 py-1 rounded-full text-xs uppercase tracking-widest">Compose ton</span>
+      <h2 class="font-display text-5xl md:text-6xl mt-4 tracking-wide"><span class="text-gold">TACOS</span> EN 4 ÉTAPES</h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6 mb-10">
+      <div class="card rounded-2xl p-6">
+        <div class="text-flame font-marker text-2xl">Étape 1</div>
+        <h3 class="font-display text-2xl mt-1">La taille</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li class="flex justify-between"><span>Simple — 1 viande</span><b class="text-gold">6,50€</b></li>
+          <li class="flex justify-between"><span>Double — 2 viandes</span><b class="text-gold">8,50€</b></li>
+          <li class="flex justify-between"><span>Triple — 3 viandes + 2 galettes</span><b class="text-gold">11,50€</b></li>
+        </ul>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="text-flame font-marker text-2xl">Étape 2</div>
+        <h3 class="font-display text-2xl mt-1">La viande</h3>
+        <div class="mt-4 flex flex-wrap gap-2 text-xs">
+          <span class="chip px-3 py-1 rounded-full">Poulet</span>
+          <span class="chip px-3 py-1 rounded-full">Kebab</span>
+          <span class="chip px-3 py-1 rounded-full">Steak</span>
+          <span class="chip px-3 py-1 rounded-full">Tenders</span>
+          <span class="chip px-3 py-1 rounded-full">Nuggets</span>
+          <span class="chip px-3 py-1 rounded-full">Cordon bleu</span>
+          <span class="chip px-3 py-1 rounded-full">Fish</span>
+          <span class="chip px-3 py-1 rounded-full">Escalope panée</span>
+          <span class="chip px-3 py-1 rounded-full">Merguez</span>
+        </div>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="text-flame font-marker text-2xl">Étape 3</div>
+        <h3 class="font-display text-2xl mt-1">La sauce</h3>
+        <div class="mt-4 flex flex-wrap gap-2 text-xs">
+          <span class="chip px-3 py-1 rounded-full">Andalouse</span>
+          <span class="chip px-3 py-1 rounded-full">Tartare</span>
+          <span class="chip px-3 py-1 rounded-full">Brazil</span>
+          <span class="chip px-3 py-1 rounded-full">Ketchup</span>
+          <span class="chip px-3 py-1 rounded-full">Biggy</span>
+          <span class="chip px-3 py-1 rounded-full">Blanche</span>
+          <span class="chip px-3 py-1 rounded-full">Poivre</span>
+          <span class="chip px-3 py-1 rounded-full">BBQ</span>
+          <span class="chip px-3 py-1 rounded-full">Fish</span>
+          <span class="chip px-3 py-1 rounded-full">Curry</span>
+          <span class="chip px-3 py-1 rounded-full">Mayo</span>
+          <span class="chip px-3 py-1 rounded-full">Magic onion</span>
+          <span class="chip px-3 py-1 rounded-full">Chili thai</span>
+          <span class="chip px-3 py-1 rounded-full">Algérienne</span>
+          <span class="chip px-3 py-1 rounded-full">Samouraï</span>
+        </div>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <div class="text-flame font-marker text-2xl">Étape 4</div>
+        <h3 class="font-display text-2xl mt-1">Les extras</h3>
+        <div class="mt-4 space-y-2 text-sm">
+          <div>
+            <div class="text-xs text-neutral-500 uppercase tracking-wider">Fromages <span class="text-gold">+1€</span></div>
+            <p class="text-neutral-400">Raclette, chèvre, œuf, cheddar, emmental, boursin, vache qui rit, mozza.</p>
+          </div>
+          <div>
+            <div class="text-xs text-neutral-500 uppercase tracking-wider">Crudités <span class="text-gold">offert</span></div>
+            <p class="text-neutral-400">Olives, poivrons, cornichons, salade, tomates, oignons, champignons, oignons frits.</p>
+          </div>
+          <div>
+            <div class="text-xs text-neutral-500 uppercase tracking-wider">Charcuterie <span class="text-gold">+1€</span></div>
+            <p class="text-neutral-400">Chorizo, lardons, bacon américain.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side cards -->
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card rounded-2xl p-6 bg-gradient-to-br from-gold/20 to-flame/10 border-gold/30">
+        <h3 class="font-marker text-3xl text-gold">Menu Étudiant</h3>
+        <p class="text-neutral-300 mt-2 text-sm">Tacos 1 viande + frites + boisson 33cl. <span class="text-gold font-bold">Uniquement le midi.</span></p>
+        <div class="mt-4 price-tag inline-block px-4 py-2 rounded-lg font-display text-2xl">7€</div>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-marker text-3xl text-gold">Kids Meal</h3>
+        <p class="text-neutral-400 mt-2 text-sm">Cheese ou nuggets + frites + boisson + dessert + jouet.</p>
+        <div class="mt-4 price-tag inline-block px-4 py-2 rounded-lg font-display text-2xl">5,90€</div>
+      </div>
+      <div class="card rounded-2xl p-6">
+        <h3 class="font-marker text-3xl text-gold">Tex-Mex & Desserts</h3>
+        <ul class="text-sm text-neutral-400 mt-2 space-y-1">
+          <li class="flex justify-between"><span>Mozza sticks ×3 / Camembert ×3 / Jalapeños ×3</span><b class="text-gold">3€</b></li>
+          <li class="flex justify-between"><span>Tenders ×3 / Onion rings ×6 / Wings ×3 / Nuggets ×4</span><b class="text-gold">3€</b></li>
+          <li class="flex justify-between"><span>Tarte au daim / Tiramisu</span><b class="text-gold">3€</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 px-6 bg-coal">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div class="placeholder-img aspect-[4/3] rounded-3xl"><span>[ Ambiance restaurant ]</span></div>
+    <div>
+      <span class="chip inline-block px-4 py-1 rounded-full text-xs uppercase tracking-widest">L'esprit</span>
+      <h2 class="font-display text-5xl md:text-6xl mt-4 tracking-wide">FAIT MAIN.<br><span class="text-gold">SERVI VITE.</span></h2>
+      <p class="text-neutral-400 mt-4">
+        Chez <b>Centrale Food</b>, on mise sur des produits frais, des sauces préparées au quotidien et des recettes pensées pour les vrais affamés. Que tu sois étudiant pressé, famille du dimanche ou bande de potes après le ciné — il y a un menu pour toi.
+      </p>
+      <div class="grid grid-cols-2 gap-4 mt-8">
+        <div class="border border-white/10 rounded-xl p-4">
+          <div class="font-display text-3xl text-gold">Halal</div>
+          <p class="text-xs text-neutral-500 uppercase tracking-wider">Viande certifiée</p>
+        </div>
+        <div class="border border-white/10 rounded-xl p-4">
+          <div class="font-display text-3xl text-gold">Frais</div>
+          <p class="text-xs text-neutral-500 uppercase tracking-wider">Préparé minute</p>
+        </div>
+        <div class="border border-white/10 rounded-xl p-4">
+          <div class="font-display text-3xl text-gold">Sur place</div>
+          <p class="text-xs text-neutral-500 uppercase tracking-wider">ou à emporter</p>
+        </div>
+        <div class="border border-white/10 rounded-xl p-4">
+          <div class="font-display text-3xl text-gold">Livraison</div>
+          <p class="text-xs text-neutral-500 uppercase tracking-wider">Uber & Deliveroo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 px-6 grain">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <span class="chip inline-block px-4 py-1 rounded-full text-xs uppercase tracking-widest">Viens nous voir</span>
+      <h2 class="font-display text-5xl md:text-6xl mt-4 tracking-wide">ON T'ATTEND <span class="text-gold">AU COMPTOIR</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="card rounded-2xl p-8">
+        <h3 class="font-display text-3xl tracking-wide">Adresse</h3>
+        <p class="text-neutral-400 mt-2">12 rue de la Centrale<br>75000 Paris</p>
+
+        <h3 class="font-display text-3xl tracking-wide mt-6">Horaires</h3>
+        <ul class="text-neutral-400 mt-2 text-sm space-y-1">
+          <li class="flex justify-between border-b border-white/5 py-1"><span>Lundi — Jeudi</span><b class="text-gold">11h00 — 23h00</b></li>
+          <li class="flex justify-between border-b border-white/5 py-1"><span>Vendredi — Samedi</span><b class="text-gold">11h00 — 01h00</b></li>
+          <li class="flex justify-between py-1"><span>Dimanche</span><b class="text-gold">12h00 — 23h00</b></li>
+        </ul>
+
+        <h3 class="font-display text-3xl tracking-wide mt-6">Téléphone</h3>
+        <a href="tel:+33100000000" class="text-gold hover:text-flame text-lg">01 00 00 00 00</a>
+
+        <div class="mt-6 flex gap-3">
+          <a href="#" class="border border-white/10 hover:border-gold hover:text-gold px-4 py-2 rounded-full text-sm transition">Instagram</a>
+          <a href="#" class="border border-white/10 hover:border-gold hover:text-gold px-4 py-2 rounded-full text-sm transition">TikTok</a>
+          <a href="#" class="border border-white/10 hover:border-gold hover:text-gold px-4 py-2 rounded-full text-sm transition">Snap</a>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-white/10 min-h-[400px]">
+        <iframe
+          title="Carte"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=2.32%2C48.85%2C2.36%2C48.87&layer=mapnik"
+          class="w-full h-full"
+          loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-ink border-t border-white/5 py-10 px-6">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-md bg-gold flex items-center justify-center font-display text-ink">CF</div>
+      <span class="font-display text-xl tracking-wider text-neutral-300">CENTRALE FOOD</span>
+    </div>
+    <p>© 2026 Centrale Food — Tous droits réservés.</p>
+    <div class="flex gap-4">
+      <a href="#" class="hover:text-gold">Mentions légales</a>
+      <a href="#" class="hover:text-gold">CGV</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
