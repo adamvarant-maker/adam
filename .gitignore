@@ -2,3 +2,6 @@ short-tour-eiffel/frames/
 short-tour-eiffel/stills/
 short-tour-eiffel/*.wav
 short-tour-eiffel/render.log
+short-tour-eiffel/web3d/node_modules/
+short-tour-eiffel/st3/
+short-tour-eiffel/*.log
